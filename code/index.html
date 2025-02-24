@@ -1,1 +1,74 @@
-<h2>Hello</h2>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP Conception d'une base de données - BILAL & LAKSHAN</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Films</h1>
+    </header>
+
+    <section class="films-container" id="films-container">
+        <!-- Les films seront insérés ici via JavaScript -->
+    </section>
+
+    <script>
+        // Fonction pour récupérer les films depuis le fichier PHP
+        fetch('index.php')
+        .then(response => response.json())
+        .then(films => {
+            const filmsContainer = document.getElementById('films-container');
+            films.forEach(film => {
+                const filmCard = document.createElement('div');
+                filmCard.classList.add('film-card');
+
+                // Utilisation de l'image récupérée de la base de données
+                const filmImage = document.createElement('img');
+                filmImage.src = film.image;  // L'image est récupérée depuis la base de données
+                filmImage.alt = film.titre;
+
+                const filmTitle = document.createElement('h3');
+                filmTitle.innerText = `${film.titre} (${film.annee})`;
+
+                const filmResume = document.createElement('p');
+                filmResume.innerText = film.resume;
+
+                const genres = document.createElement('p');
+                genres.classList.add('genres');
+                genres.innerHTML = `<strong>Genres:</strong> ${film.genres}`;
+
+                const acteurs = document.createElement('p');
+                acteurs.classList.add('acteurs');
+                acteurs.innerHTML = `<strong>Acteurs:</strong> ${film.acteurs}`;
+
+                const stars = document.createElement('div');
+                stars.classList.add('stars');
+                const note = film.note_moyenne || 0;  // Si la note est nulle, mettre à 0
+                for (let i = 1; i <= 5; i++) {
+                    const star = document.createElement('span');
+                    star.classList.add('star');
+                    star.innerText = '★';
+                    if (i > note) {
+                        star.classList.add('empty');
+                    }
+                    stars.appendChild(star);
+                }
+
+                filmCard.appendChild(filmImage);
+                filmCard.appendChild(filmTitle);
+                filmCard.appendChild(filmResume);
+                filmCard.appendChild(genres);
+                filmCard.appendChild(acteurs);
+                filmCard.appendChild(stars);
+
+                filmsContainer.appendChild(filmCard);
+            });
+        })
+        .catch(error => console.error('Erreur:', error));
+
+    </script>
+</body>
+</html>

@@ -1,52 +1,52 @@
-version : '3'
+version: '3.8'
 
 services:
-  nginx:
-    image: nginx:1.22-alpine
+  php:
+    build: .
+    container_name: php-container
+    volumes:
+      - ./code:/var/www/html  # Montage du répertoire local vers le conteneur
     ports:
       - "8080:80"
-    volumes:
-      - ./code:/code
-      - ./nginx.conf:/etc/nginx/nginx.conf
-  php:
-    build:
-    context: .
-    dockerfile: dockerfile
-    container_name: php73
     depends_on:
-    - db
-    image: php:7.3-apache
+      - mysql
+    networks:
+      - app_network
+
+  mysql:
+    image: mysql:8
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: appdb
+      MYSQL_USER: eleve
+      MYSQL_PASSWORD: eleve
     volumes:
-    - ./php:/var/www/html/
+      - dbdata:/var/lib/mysql  # Volume persistant pour la base de données
     ports:
-    - 80:80
-  db:
-    container_name: mysql8
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
+      - "3306:3306"
+    networks:
+      - app_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
     environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_DATABASE: appdb
-    MYSQL_USER: eleve
-    MYSQL_PASSWORD: eleve
-    ports:
-    - 3306:3306
-  phpmya:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
-    environment:
-    PMA_ARBITRARY: 1
-    PMA_HOST: db
-    PMA_USER: eleve
-    PMA_PASSWORD: eleve
-    UPLOAD_LIMIT: 20M
+      PMA_HOST: mysql  # Assurez-vous que cela correspond au nom du service MySQL
+      MYSQL_ROOT_PASSWORD: root
+      PMA_USER: eleve
+      PMA_PASSWORD: eleve
     ports:
       - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - app_network
 
 volumes:
-  dbdata:
+  dbdata:  # Volume persistant pour les données MySQL
     driver: local
-    driver_opts:
-      type: "nfs"
-      o: "addr=192.168.1.100,rw"
-      device: ":/path/to/shared/folder"
+
+networks:
+  app_network:
+    driver: bridge
