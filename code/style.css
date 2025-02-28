@@ -55,3 +55,26 @@ h1 {
 .star.empty {
     color: #ddd;
 }
+.film-details {
+    text-align: center;
+    padding: 20px;
+}
+.film-details img {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.films-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+.film-card {
+    width: 200px;
+    text-align: center;
+}
+.film-card img {
+    width: 100%;
+    border-radius: 10px;
+}

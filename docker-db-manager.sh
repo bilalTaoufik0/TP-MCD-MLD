@@ -29,13 +29,12 @@ backup_db() {
 
 # Fonction pour commit et push
 commit_and_push() {
-    echo "⏳ Commit et push des modifications..."
-    git add $BACKUP_FILE
-    git commit -m "Sauvegarde automatique de la base de données"
+    echo "⏳ Commit et push de toutes les modifications..."
+    git add .
+    git commit -m "Sauvegarde automatique et mise à jour du projet"
     git push
     echo "✅ Commit et push effectués."
 }
-
 # Vérifier l'argument fourni
 case "$1" in
     up)
