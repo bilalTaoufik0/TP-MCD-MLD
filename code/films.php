@@ -23,7 +23,7 @@ $sql = "SELECT f.id AS film_id, f.titre, f.annee, f.resume, f.image,
                GROUP_CONCAT(CONCAT(a.nom, ' ', a.prenom) SEPARATOR ', ') AS acteurs, 
                AVG(n.note) AS note_moyenne
         FROM Film f
-        LEFT JOIN Film_Genre fg ON f.id = fg.idFilm
+        LEFT JOIN Appartenir fg ON f.id = fg.idFilm
         LEFT JOIN Genre g ON fg.idGenre = g.id
         LEFT JOIN Jouer j ON f.id = j.idFilm
         LEFT JOIN Artiste a ON j.idArtiste = a.id

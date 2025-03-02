@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Appartenir`
+--
+
+DROP TABLE IF EXISTS `Appartenir`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Appartenir` (
+  `idFilm` int NOT NULL,
+  `idGenre` int NOT NULL,
+  PRIMARY KEY (`idFilm`,`idGenre`),
+  KEY `idGenre` (`idGenre`),
+  CONSTRAINT `Appartenir_ibfk_1` FOREIGN KEY (`idFilm`) REFERENCES `Film` (`id`),
+  CONSTRAINT `Appartenir_ibfk_2` FOREIGN KEY (`idGenre`) REFERENCES `Genre` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Appartenir`
+--
+
+LOCK TABLES `Appartenir` WRITE;
+/*!40000 ALTER TABLE `Appartenir` DISABLE KEYS */;
+INSERT INTO `Appartenir` VALUES (1,1),(4,1),(3,2),(6,2),(5,3),(7,4),(2,5);
+/*!40000 ALTER TABLE `Appartenir` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Artiste`
 --
 
@@ -66,33 +93,6 @@ LOCK TABLES `Film` WRITE;
 /*!40000 ALTER TABLE `Film` DISABLE KEYS */;
 INSERT INTO `Film` VALUES (1,'Le Démentellement','2025-02-24','Un drame familial sur la déconstruction d\'une vie.','/img/le_dementellement.jpg'),(2,'Les Petits Princes (Foot)','2025-02-24','Un film sur un groupe de jeunes footballeurs.','/img/les_petits_princes_foot.jpg'),(3,'Mercato de Jamel Debbouze','2025-02-24','Une comédie sur les coulisses du mercato.','/img/mercato_de_jamel_debbouze.jpg'),(4,'Mufasa','2025-02-24','Une histoire épique sur le lion Mufasa.','/img/mufasa.webp'),(5,'Paddington au Pérou','2025-02-24','Paddington voyage au Pérou pour de nouvelles aventures.','/img/paddington_au_perou.webp'),(6,'Pourquoi j\'ai pas mangé mon père','2025-02-24','Une comédie préhistorique sur un fils qui ne mange pas son père.','/img/pourquoi_jai_pas_mange_mon_pere.jpg'),(7,'Sonic 3','2025-02-24','Les nouvelles aventures de Sonic, le hérisson supersonique.','/img/sonic_3.webp');
 /*!40000 ALTER TABLE `Film` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Film_Genre`
---
-
-DROP TABLE IF EXISTS `Film_Genre`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Film_Genre` (
-  `idFilm` int NOT NULL,
-  `idGenre` int NOT NULL,
-  PRIMARY KEY (`idFilm`,`idGenre`),
-  KEY `idGenre` (`idGenre`),
-  CONSTRAINT `Film_Genre_ibfk_1` FOREIGN KEY (`idFilm`) REFERENCES `Film` (`id`),
-  CONSTRAINT `Film_Genre_ibfk_2` FOREIGN KEY (`idGenre`) REFERENCES `Genre` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Film_Genre`
---
-
-LOCK TABLES `Film_Genre` WRITE;
-/*!40000 ALTER TABLE `Film_Genre` DISABLE KEYS */;
-INSERT INTO `Film_Genre` VALUES (1,1),(4,1),(3,2),(6,2),(5,3),(7,4),(2,5);
-/*!40000 ALTER TABLE `Film_Genre` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -214,4 +214,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-28  1:37:57
+-- Dump completed on 2025-03-02  0:41:21
